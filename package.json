@@ -1,0 +1,36 @@
+{
+  "name": "koa-mockjs",
+  "version": "0.1.0",
+  "description": "mockjs api server middleware",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/52cik/koa-mockjs.git"
+  },
+  "keywords": [
+    "koa",
+    "koa-mockjs",
+    "mockjs",
+    "mock-server"
+  ],
+  "author": "楼教主 <fe.52cik@gmail.com> (http://www.52cik.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/52cik/koa-mockjs/issues"
+  },
+  "homepage": "https://github.com/52cik/koa-mockjs#readme",
+  "dependencies": {
+    "mockjs-lite": "^0.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.12.1",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
+    "get-port": "^3.2.0",
+    "koa": "^2.4.1",
+    "pify": "^3.0.0"
+  }
+}
