@@ -20,7 +20,7 @@ function cors(ctx) {
 
   ctx.set('Access-Control-Allow-Origin', requestOrigin);
 
-  if (ctx.method === 'OPTIONS' && !ctx.get('Access-Control-Request-Method')) {
+  if (ctx.method === 'OPTIONS') {
     ctx.set('Access-Control-Allow-Methods', 'GET,HEAD,PUT,POST,DELETE,PATCH');
     const allowHeaders = ctx.get('Access-Control-Request-Headers');
     if (allowHeaders) {
@@ -90,14 +90,16 @@ function loadMockData(opts) {
  */
 function document(ctx, data) {
   const href = ctx.href.replace(/\/$/, '');
-  const list = Object.keys(data).sort((a, b) => a.file > b.file).map((it) => {
-    const { describe, url, file } = data[it];
-    return {
-      title: describe,
-      url: `${href}${url}`,
-      file,
-    };
-  });
+  const list = Object.keys(data)
+    .map((it) => {
+      const { describe, url, file } = data[it];
+      return {
+        title: describe,
+        url: `${href}${url}`,
+        file,
+      };
+    })
+    .sort((a, b) => String(a.file).localeCompare(b.file));
 
   return template.replace('@menuList', JSON.stringify(list));
 }
@@ -124,7 +126,6 @@ function serve(path, opts) {
 
   const fixPath = path.replace(/\/?$/, '');
 
-  opts = Object.assign({}, opts);
   opts.root = resolve(root);
   opts.rePrefix = new RegExp(`^${fixPath.replace(/[.\\[\]{}()|^$?*+]/g, '\\$&')}(?:/|$)`);
 
@@ -142,12 +143,17 @@ function serve(path, opts) {
 
     const mockdata = loadMockData(opts);
     const newPath = ctx.path.replace(opts.rePrefix, '/');
-    let { data } = mockdata[newPath] || {};
 
     if (newPath === '/') {
       ctx.body = document(ctx, mockdata);
       return;
     }
+
+    if (mockdata[newPath] === undefined) {
+      return;
+    }
+
+    let { data } = mockdata[newPath];
 
     if (typeof data === 'function') {
       data = data(ctx, MockLite);
