@@ -1,0 +1,9 @@
+/**
+ * base string
+ *
+ * @url /base-string
+ */
+
+{
+  "string|1-10": "x"
+}

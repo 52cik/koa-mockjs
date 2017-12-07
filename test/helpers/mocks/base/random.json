@@ -1,0 +1,13 @@
+/**
+ * base random
+ *
+ * @url /base-random
+ */
+
+{
+  "date": "@date",
+  "color": "@color",
+  "name": "@cname",
+  "mobile": "@mobile",
+  "email": "@email"
+}

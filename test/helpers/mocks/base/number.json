@@ -1,0 +1,9 @@
+/**
+ * base number
+ *
+ * @url /base-number
+ */
+
+{
+  "number|1-100": 1
+}
