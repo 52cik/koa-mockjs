@@ -9,6 +9,9 @@
 [![license MIT][license-image]][license-url]
 
 
+## 环境需求
+
+> `node8`, `koa2`
 
 ## 如何使用
 
@@ -202,17 +205,17 @@ module.exports = (ctx) => {
 
 
 
-[travis-url]: https://travis-ci.org/52cik/express-mockjs
-[travis-image]: https://img.shields.io/travis/52cik/express-mockjs/master.svg?label=linux
+[travis-url]: https://travis-ci.org/52cik/koa-mockjs
+[travis-image]: https://img.shields.io/travis/52cik/koa-mockjs/master.svg?label=linux
 
-[coveralls-url]: https://coveralls.io/github/52cik/express-mockjs?branch=master
-[coveralls-image]: https://coveralls.io/repos/52cik/express-mockjs/badge.svg?branch=master&service=github
+[coveralls-url]: https://coveralls.io/github/52cik/koa-mockjs?branch=master
+[coveralls-image]: https://coveralls.io/repos/52cik/koa-mockjs/badge.svg?branch=master&service=github
 
 [license-url]: https://opensource.org/licenses/MIT
 [license-image]: https://img.shields.io/badge/license-MIT-blue.svg
 
-[dependencies-url]: https://david-dm.org/52cik/express-mockjs
-[dependencies-image]: https://img.shields.io/david/52cik/express-mockjs.svg?style=flat
+[dependencies-url]: https://david-dm.org/52cik/koa-mockjs
+[dependencies-image]: https://img.shields.io/david/52cik/koa-mockjs.svg?style=flat
 
 [node-url]: https://nodejs.org
 [node-image]: https://img.shields.io/badge/node-%3E%3D%200.10.0-brightgreen.svg

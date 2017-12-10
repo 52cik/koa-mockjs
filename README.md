@@ -11,6 +11,9 @@
 
 [中文文档](README.zh-CN.md)
 
+## Requirements
+
+> `node8`, `koa2`
 
 ## How to use it
 
