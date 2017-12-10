@@ -154,7 +154,7 @@ function serve(path, opts) {
   opts.root = resolve(root);
   opts.rePrefix = new RegExp(`^${fixPath.replace(/[.\\[\]{}()|^$?*+]/g, '\\$&')}(?:/|$)`);
 
-  return async (ctx, next) => {
+  return (ctx, next) => {
     if (!opts.rePrefix.test(ctx.path)) {
       return next();
     }
