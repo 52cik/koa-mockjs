@@ -1,7 +1,6 @@
 const fs = require('fs');
 const { join, resolve } = require('path');
 const MockLite = require('mockjs-lite');
-const walkdir = require('./lib/walkdir');
 
 const template = fs.readFileSync(join(__dirname, 'doc', 'document.html'), 'utf8');
 const reDoc = new RegExp('^\\s*\\/\\*\\*[^*]+\\*\\s*([^\\r\\n]+)[\\s\\S]+?@url\\s+([^\\r\\n]+)[\\s\\S]+?\\*\\/');
@@ -27,6 +26,32 @@ function cors(ctx) {
       ctx.set('Access-Control-Allow-Headers', allowHeaders);
     }
   }
+}
+
+/**
+ * walk dir sync
+ *
+ * @param {string} path
+ * @param {RegExp} pattern
+ * @returns
+ */
+function walkdir(path, pattern) {
+  const files = fs.readdirSync(path);
+  let fileList = [];
+
+  files.forEach((name) => {
+    const filePath = join(path, name);
+    const stat = fs.statSync(filePath);
+
+    if (pattern.test(filePath) && stat.isFile()) {
+      fileList.push(filePath);
+    } else if (stat.isDirectory()) {
+      const list = walkdir(filePath, pattern);
+      fileList = fileList.concat(list);
+    }
+  });
+
+  return fileList;
 }
 
 /**
