@@ -13,7 +13,7 @@
 
 ## Requirements
 
-> `node8`, `koa2`
+> `node6` or `node8`, `koa2`
 
 ## How to use it
 
