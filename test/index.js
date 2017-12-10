@@ -102,12 +102,23 @@ test('Other mock data', async (t) => {
     .get('/api/other-info')
     .expect('Content-Type', /json/)
     .expect(200, /^\{"code":\d,"data":\{"id":\d,"title":/);
+  await req
+    .get('/api/custom')
+    .query({ a: 'haha' })
+    .expect('Content-Type', /json/)
+    .expect(200, '{"a":"haha"}');
+  await req
+    .get('/api/null')
+    .query({ a: 'haha' })
+    .expect('Content-Type', /json/)
+    .expect(200, '{}');
   t.pass();
 });
 
 test('OPTIONS', async (t) => {
   await req
     .options('/api/base-number')
+    .set('Origin', 'http://localhost')
     .expect(200, '');
   await req
     .options('/api/base-number')
@@ -116,4 +127,54 @@ test('OPTIONS', async (t) => {
     .expect('Access-Control-Allow-Headers', 'xCustom,haha')
     .expect(200, '');
   t.pass();
+});
+
+test('Cross-Origin Resource Sharing', async (t) => {
+  await req
+    .get('/api/base-number')
+    .set('Origin', 'http://localhost')
+    .expect(200, /\{"number":\d+\}/);
+  t.pass();
+});
+
+test('root', async (t) => {
+  const s = new Koa();
+  s.use(mock('/', { root: join(__dirname, 'helpers', 'mocks') }));
+
+  await request(s.listen())
+    .get('/base-number')
+    .expect(200, /\{"number":\d+\}/);
+  t.pass();
+});
+
+test('root not exists', async (t) => {
+  const s = new Koa();
+  s.use(mock('/', 'mocks'));
+
+  await request(s.listen())
+    .get('/base-number')
+    .expect(404);
+  t.pass();
+});
+
+test('throws error', async (t) => {
+  const error = t.throws(() => mock('/'));
+  t.is(error.message, 'root directory is required to serve files');
+});
+
+test.cb('error callback', (t) => {
+  t.plan(1);
+
+  const s = new Koa();
+  s.use(mock('/', {
+    root: join(__dirname, 'helpers', 'mocks'),
+    error(err) {
+      t.is(err.type, 'Mock loading error');
+    },
+  }));
+
+  request(s.listen())
+    .get('/base-number')
+    .expect(200, /\{"number":\d+\}/)
+    .end(() => t.end());
 });
