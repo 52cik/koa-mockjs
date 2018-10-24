@@ -103,7 +103,7 @@ function loadMockData(opts) {
       }
     }
 
-    const key = url.split('?')[0];
+    const key = opts.fulurl ? url : url.split('?')[0];
     ret[key] = item;
   });
 
@@ -167,7 +167,7 @@ function serve(path, opts) {
     }
 
     const mockdata = loadMockData(opts);
-    const newPath = ctx.path.replace(opts.rePrefix, '/');
+    const newPath = (opts.fulurl ? ctx.url : ctx.path).replace(opts.rePrefix, '/');
 
     if (newPath === '/') {
       ctx.body = document(ctx, mockdata);
